@@ -1,0 +1,19 @@
+---
+# Postgresql Role
+
+- name: install progress
+  command: "yum install -y postgresql-server"
+
+- name: enable postgresql at boot
+  service:
+    name: postgresql
+    enabled: yes
+# The next two commands should only be done once to be idempotent
+- name: initilize postgres
+  command: postgresql-setup initdb
+- name: initilize postgres some more
+  command: chkconfig postgresql on
+- name: start postgres
+  service:
+    name: postgresql.service
+    state: started
